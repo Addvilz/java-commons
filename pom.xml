@@ -22,7 +22,7 @@
     <name>Picoff Commons</name>
     <groupId>com.picoff</groupId>
     <artifactId>commons</artifactId>
-    <version>1.17.2</version>
+    <version>1.17.3</version>
     <packaging>jar</packaging>
 
     <url>https://github.com/picoff/java-commons</url>
