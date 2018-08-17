@@ -18,7 +18,7 @@ package com.picoff.commons.pipeline;
 import com.picoff.commons.functional.ProcedureResultHandler;
 
 public class PipelineContext<T> {
-    private final T event;
+    private volatile T event;
     private final ProcedureResultHandler onComplete;
     private boolean interrupted;
 
@@ -31,6 +31,11 @@ public class PipelineContext<T> {
 
     public T getEvent() {
         return event;
+    }
+
+    public PipelineContext<T> replaceEvent(final T event) {
+        this.event = event;
+        return this;
     }
 
     ProcedureResultHandler getOnCompleteHandler() {

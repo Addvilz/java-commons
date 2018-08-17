@@ -39,4 +39,13 @@ public interface ProcedureResultHandler extends Handler<ProcedureResult> {
             fail(t);
         }
     }
+
+    default void tryChecked(final CheckedProcedure procedure) {
+        try {
+            procedure.invoke();
+            succeed();
+        } catch (final Throwable t) {
+            fail(t);
+        }
+    }
 }

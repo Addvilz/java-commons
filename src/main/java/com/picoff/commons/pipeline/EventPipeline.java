@@ -22,7 +22,7 @@ public interface EventPipeline<T> {
         return new BasicSequentialPipeline<>();
     }
 
-    EventPipeline then(final PipelineStage pipelineStage);
+    EventPipeline<T> then(final PipelineStage<T> pipelineStage);
 
     void clear();
 

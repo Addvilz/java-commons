@@ -16,11 +16,9 @@
 package com.picoff.commons.functional;
 
 @FunctionalInterface
-public interface Procedure extends Runnable {
-    void invoke();
-
-    @Override
-    default void run() {
-        invoke();
-    }
+public interface InstanceMapper<T, S> {
+    /**
+     * Map values from T into existing instance of S
+     */
+    void mapInto(final T from, final S to);
 }

@@ -15,12 +15,15 @@
 
 package com.picoff.commons.functional;
 
+import java.util.concurrent.Callable;
+
 @FunctionalInterface
-public interface Procedure extends Runnable {
-    void invoke();
+public interface CheckedProcedure extends Callable<Void> {
+    void invoke() throws Exception;
 
     @Override
-    default void run() {
+    default Void call() throws Exception {
         invoke();
+        return null;
     }
 }

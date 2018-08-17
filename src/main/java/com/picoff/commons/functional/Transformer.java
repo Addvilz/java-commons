@@ -16,11 +16,13 @@
 package com.picoff.commons.functional;
 
 @FunctionalInterface
-public interface Procedure extends Runnable {
-    void invoke();
-
-    @Override
-    default void run() {
-        invoke();
-    }
+public interface Transformer<T, S> {
+    /**
+     * Semantic version of Function, with premise that every invocation of transformTo produces a new instance of
+     * S given the parameter T.
+     *
+     * @param value Input value
+     * @return Output value
+     */
+    S transformTo(final T value);
 }

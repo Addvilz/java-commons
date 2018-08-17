@@ -19,9 +19,9 @@ package com.picoff.commons.pipeline;
 import com.picoff.commons.functional.ProcedureResultHandler;
 
 @FunctionalInterface
-public interface PipelineStage {
+public interface PipelineStage<T> {
     void process(
-        final PipelineContext context,
+        final PipelineContext<T> context,
         final ProcedureResultHandler onCompleteHandler
     );
 }

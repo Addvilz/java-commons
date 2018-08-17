@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BasicSequentialPipeline<T> implements EventPipeline<T> {
-    private final List<PipelineStage> stages = new ArrayList<>();
+    private final List<PipelineStage<T>> stages = new ArrayList<>();
     private final EventPipeline<T> failurePipeline;
 
     public BasicSequentialPipeline(final EventPipeline<T> failurePipeline) {
@@ -36,7 +36,7 @@ public class BasicSequentialPipeline<T> implements EventPipeline<T> {
     }
 
     @Override
-    public EventPipeline then(final PipelineStage pipelineStage) {
+    public EventPipeline<T> then(final PipelineStage<T> pipelineStage) {
         stages.add(pipelineStage);
         return this;
     }
@@ -47,7 +47,7 @@ public class BasicSequentialPipeline<T> implements EventPipeline<T> {
     }
 
     @Override
-    public EventPipeline submit(final T subject, final ProcedureResultHandler onTransitComplete) {
+    public EventPipeline<T> submit(final T subject, final ProcedureResultHandler onTransitComplete) {
         if (stages.isEmpty()) {
             onTransitComplete.fail("No stages defined");
             return this;
@@ -80,7 +80,7 @@ public class BasicSequentialPipeline<T> implements EventPipeline<T> {
         }
     }
 
-    private void handleResult(final PipelineContext context, final AtomicInteger stage, final ProcedureResult result) {
+    private void handleResult(final PipelineContext<T> context, final AtomicInteger stage, final ProcedureResult result) {
         if (result.succeeded()) {
             process(context, stage, nextResult -> handleResult(context, stage, nextResult));
         } else {
@@ -89,7 +89,7 @@ public class BasicSequentialPipeline<T> implements EventPipeline<T> {
     }
 
     private void process(
-        final PipelineContext context,
+        final PipelineContext<T> context,
         final AtomicInteger stage,
         final ProcedureResultHandler onCompleteHandler
     ) {

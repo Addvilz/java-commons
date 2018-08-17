@@ -16,11 +16,6 @@
 package com.picoff.commons.functional;
 
 @FunctionalInterface
-public interface Procedure extends Runnable {
-    void invoke();
-
-    @Override
-    default void run() {
-        invoke();
-    }
+public interface BiHandler<T, S> {
+    void handle(final T aResult, final S bResult);
 }
